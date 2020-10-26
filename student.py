@@ -15,6 +15,19 @@ class Student:
         except IOError as err:
             print("Problem z otwarciem pliku", err)
 
+    def dodaj(self, id, name, surname, age, city, group):
+        nowyStudent = [id, name, surname, age, city, group]
+        self.students.append(nowyStudent)
+        self.df = pandas.DataFrame(self.students, columns=[
+            'id', 'name', 'surname', 'age', 'city', 'group'])
+        try:
+            with open(self.fileName, 'a+') as f:
+                f.write(str(id)+';'+name+';'+surname+';' +
+                        str(age)+';'+city+';'+group+'\n')
+                f.close()
+        except:
+            print("Blad przy zapisywaniu nowego studenta do bazy")
+
     def wyszukaj(self, parametr, nazwa):
         try:
             listaUczniow = []

@@ -36,3 +36,28 @@ print(polaczonePliki)
 
 grade.statystykiOcen()
 student.statystykiStudentow()
+
+
+def dodajStudenta(id, name, surname, age, city, group, **grades):
+    print("Dodawanie nowego studenta")
+    student.dodaj(id, name, surname, age, city, group)
+    print(grades)
+    for arg in grades:
+        subject = str(arg)
+        g = int(grades[arg])
+        grade.dodaj(id, subject, g)
+
+
+lastId = int(student.students[len(student.students) - 1][0]) + 1
+dodajStudenta(lastId, "Jan", "Kowalski", 21, "Gdansk", "A01", biology=5,
+              physics=5, it=5, english=4, science=4, math=5)
+
+
+def usunStudenta(id):
+    print()
+    # statystyki grupowe (z uzyciem students oraz grades)
+    # najlepsze 5 osob z danej grupy (stypendia)
+
+    # osoby majace oceny zagrazające (2)
+
+    # srednie względem grupy ()

@@ -16,6 +16,19 @@ class Grade:
         except IOError as err:
             print("Problem z otwarciem pliku", err)
 
+    def dodaj(self, id, subject, grade):
+        print(id, subject, grade)
+        nowaOcena = [id, subject, grade]
+        self.grades.append(nowaOcena)
+        self.df = pandas.DataFrame(self.grades, columns=[
+            'id', 'subject', 'grade'])
+        try:
+            with open(self.fileName, 'a+') as f:
+                f.write(str(id)+';'+subject+';'+str(grade) + '\n')
+                f.close()
+        except:
+            print("Blad przy zapisywaniu nowych ocen studenta do bazy")
+
     def statystykiOcen(self):
         # ilosc studentow ktorzy maja wystawiona przynajmniej jedna ocene
         # uzycie Set by uniknąc dupikatow
