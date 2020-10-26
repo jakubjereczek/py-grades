@@ -15,3 +15,17 @@ class Grade:
             self.grades = df.values.tolist()
         except IOError as err:
             print("Problem z otwarciem pliku", err)
+
+    def statystykiOcen(self):
+        # ilosc studentow ktorzy maja wystawiona przynajmniej jedna ocene
+        # uzycie Set by uniknąc dupikatow
+        print("### STATYSTYKI OCEN ###")
+        idStudentow = set()
+        for i in range(len(self.grades)):
+            idStudentow.add(self.grades[i][0])
+        print("Ilosc studentów, którym wpisano choćby jedną ocene: " +
+              str(len(idStudentow)))
+        # srednia ocen
+        print("Srednia ocen dla przedmiotów: ")
+        print(self.df.groupby(['subject'])['grade'].mean())
+        print("###")

@@ -37,3 +37,26 @@ class Student:
                 return None
         except NameError as err:
             print("Bląd.", err)
+
+    def statystykiStudentow(self):
+        print("### STATYSTYKI STUDENTOW ###")
+        print("Ilosc studentow w bazie: " + str(len(self.students)))
+        # zakladajac, ze kazde imie kobiety konczy sie na "a" liczymy liczbe kobiet i mezczyzn
+        kobiety = 0
+        mezczyzni = 0
+        for i in range(len(self.students)):
+            if str(self.students[i][1])[-1] == 'a':
+                kobiety += 1
+            else:
+                mezczyzni += 1
+        print("Ilosc kobiet: ", str(kobiety),
+              ", ilosc mezczyzn: ", str(mezczyzni))
+        idGrup = set()
+        for i in range(len(self.students)):
+            idGrup.add(self.students[i][5])
+        print("Ilosc grup: " + str(len(idGrup)))
+        for grupa in idGrup:
+            liczebnosc = len(list(
+                filter(lambda name: grupa in name, self.students)))
+            print("* ", grupa, "(liczaca "+str(liczebnosc)+" osob)")
+        print("###")

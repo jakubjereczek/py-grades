@@ -33,3 +33,6 @@ grade = Grade()
 # print(grade.df)
 polaczonePliki = (student.df).merge(grade.df, on='id', how='inner')
 print(polaczonePliki)
+
+grade.statystykiOcen()
+student.statystykiStudentow()
