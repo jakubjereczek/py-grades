@@ -1,4 +1,5 @@
 import pandas
+import csv
 
 
 class Student:
@@ -17,16 +18,42 @@ class Student:
 
     def dodaj(self, id, name, surname, age, city, group):
         nowyStudent = [id, name, surname, age, city, group]
-        self.students.append(nowyStudent)
-        self.df = pandas.DataFrame(self.students, columns=[
-            'id', 'name', 'surname', 'age', 'city', 'group'])
         try:
+            self.students.append(nowyStudent)
+            self.df = pandas.DataFrame(self.students, columns=[
+                'id', 'name', 'surname', 'age', 'city', 'group'])
             with open(self.fileName, 'a+') as f:
                 f.write(str(id)+';'+name+';'+surname+';' +
                         str(age)+';'+city+';'+group+'\n')
                 f.close()
         except:
             print("Blad przy zapisywaniu nowego studenta do bazy")
+
+    def usun(self, id):
+        newStudents = []
+        try:
+            for i in range(len(self.students)):
+                if int(id) != self.students[i][0]:
+                    newStudents.append(self.students[i])
+            if len(self.students) == len(newStudents):
+                raise NameError("Brak studenta o podanym ID")
+            # z tablicy students nadpisanie pliku (wykluczajac danego studenta) oraz aktualizacja df by miec aktualne statystyki
+            print("lecimy dalej")
+            self.df = pandas.DataFrame(newStudents, columns=[
+                'id', 'name', 'surname', 'age', 'city', 'group'])
+            with open(self.fileName, 'w', encoding='utf8') as f:
+                # index
+                # znaki dostepne w utf-8
+                f.write('id;name;surname;age;city;group'+'\n')
+                for i in range(len(newStudents)):
+                    print("write")
+                    f.write(str(newStudents[i][0])+';'+newStudents[i][1]+';'+newStudents[i][2]+';' +
+                            str(newStudents[i][3])+';'+newStudents[i][4]+';'+newStudents[i][5]+'\n')
+                f.close()
+        except NameError as err:
+            print("Blad", err)
+        except:
+            print("Blad przy usuwaniu studenta z bazy")
 
     def wyszukaj(self, parametr, nazwa):
         try:

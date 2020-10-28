@@ -29,6 +29,28 @@ class Grade:
         except:
             print("Blad przy zapisywaniu nowych ocen studenta do bazy")
 
+    def usun(self, id):
+        newGrades = []
+        try:
+            for i in range(len(self.grades)):
+                if int(id) != self.grades[i][0]:
+                    newGrades.append(self.grades[i])
+            if len(self.grades) == len(newGrades):
+                raise NameError("Brak studenta o podanym ID")
+            self.df = pandas.DataFrame(newGrades, columns=[
+                'id', 'subject', 'grade'])
+            with open(self.fileName, 'w', encoding='utf8') as f:
+                f.write('id;subject;grade'+'\n')
+                for i in range(len(newGrades)):
+                    print("write")
+                    f.write(
+                        str(newGrades[i][0])+';'+newGrades[i][1]+';'+str(newGrades[i][2])+'\n')
+                f.close()
+        except NameError as err:
+            print("Blad", err)
+        except:
+            print("Blad przy usuwaniu ocen studenta z bazy")
+
     def statystykiOcen(self):
         # ilosc studentow ktorzy maja wystawiona przynajmniej jedna ocene
         # uzycie Set by uniknąc dupikatow
