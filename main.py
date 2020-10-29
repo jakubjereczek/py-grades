@@ -4,15 +4,10 @@ import pandas
 
 
 student = Student()
-# Metoda wyszukaj() przyjmuję parametry:
-# parametr - nazwisko, grupa, miast
-# nazwa - treść na ktorej podstawie szukamy
-# Zwraca liste uczniów. a przypadku gdy jest pusta None.
+# WYSWIETLANIE DANYCH DLA STUDENTOW, OCEN ORAZ INDYWIDUALNYCH STATYSTYK DLA STUDNETOW, OCEN.
 # wysz1 = student.wyszukaj("nazwisko", "Kamińska")
 # wysz2 = student.wyszukaj("grupa", "A03")
 # wysz3 = student.wyszukaj("miasto", "Gdynia")
-
-# print(wysz1)
 
 # print("Uczennice o nazwisku Kaminska: ")
 # for i in range(len(wysz1)):
@@ -28,13 +23,6 @@ student = Student()
 
 grade = Grade()
 
-# student.df.id.astype(int)
-# grade.df.id.astype(int)
-
-# print(grade.df)
-polaczonePliki = (student.df).merge(grade.df, on='id', how='inner')
-# print(polaczonePliki)
-
 # grade.statystykiOcen()
 # student.statystykiStudentow()
 
@@ -47,8 +35,7 @@ def dodajStudenta(id, name, surname, age, city, group, **grades):
         g = int(grades[arg])
         grade.dodaj(id, subject, g)
 
-
-#lastId = int(student.students[len(student.students) - 1][0]) + 1
+# lastId = int(student.students[len(student.students) - 1][0]) + 1
 # dodajStudenta(lastId, "Jan", "Kowalski", 21, "Gdansk", "A01", biology=5,
 #             physics = 5, it = 5, english = 4, science = 4, math = 5)
 
@@ -59,11 +46,30 @@ def usunStudenta(id):
     grade.usun(id)
 
 
-usunStudenta("100001")
+# usunStudenta("100001")
+
+polaczonePliki = (student.df).merge(grade.df, on='id', how='inner')
 
 # statystyki grupowe (z uzyciem students oraz grades)
-# najlepsze 5 osob z danej grupy (stypendia)
+# srednia dla grup
+print("Srednie dla grup: ")
+print(polaczonePliki.groupby(['group'])['grade'].mean())
+
+# najlepsze 5 osob z (stypendia)
+# pogrupowanie indeksow wraz ze srednia
+studenciWedlugSredniej = (polaczonePliki.groupby(['id', 'group'])[
+    'grade'].mean().sort_values()).sort_values(ascending=False).head(5)
+print(studenciWedlugSredniej)
 
 # osoby majace oceny zagrazające (2)
-
-# srednie względem grupy ()
+zagrozeni = set()
+iloscZagrozen = 0
+for i in range(len(grade.grades)):
+    if (grade.grades[i][2] < 3):
+        iloscZagrozen += 1
+        zagrozeni.add(grade.grades[i][0])
+print("Zagrozeni uczniowie: ", str(len(zagrozeni)))
+for zagrozony in zagrozeni:
+    student2 = student.wyszukaj("id", zagrozony)
+    print("* "+student2[0][1]+" "+student2[0][2]+" z grupy "+student2[0][5])
+print("Ilosc ocen niedostatecznych: "+str(iloscZagrozen))

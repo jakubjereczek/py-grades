@@ -1,5 +1,5 @@
 id;subject;grade
-100001;biology;2
+100001;biology;5
 100001;physics;3
 100001;it;4
 100001;english;5
@@ -8,11 +8,11 @@ id;subject;grade
 100002;biology;2
 100002;physics;2
 100002;it;2
-100002;english;2
+100002;english;5
 100002;science;3
 100002;maths;3
 100003;biology;3
-100003;physics;2
+100003;physics;5
 100003;it;5
 100003;english;3
 100003;science;4
@@ -49,8 +49,8 @@ id;subject;grade
 100008;maths;5
 100009;biology;2
 100009;physics;2
-00009;it;2
-1000009;english;2
+100009;it;2
+100009;english;2
 100009;science;2
 100009;maths;2
 100010;biology;5
@@ -181,7 +181,7 @@ id;subject;grade
 100030;maths;5
 100031;biology;5
 100031;physics;5
-10031;it;4
+100031;it;4
 100031;english;3
 100031;science;4
 100031;maths;5

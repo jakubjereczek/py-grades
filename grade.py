@@ -14,7 +14,7 @@ class Grade:
             self.df = df
             self.grades = df.values.tolist()
         except IOError as err:
-            print("Problem z otwarciem pliku", err)
+            print("Wystapił problem z otwarciem pliku:", err)
 
     def dodaj(self, id, subject, grade):
         print(id, subject, grade)
@@ -42,12 +42,11 @@ class Grade:
             with open(self.fileName, 'w', encoding='utf8') as f:
                 f.write('id;subject;grade'+'\n')
                 for i in range(len(newGrades)):
-                    print("write")
                     f.write(
                         str(newGrades[i][0])+';'+newGrades[i][1]+';'+str(newGrades[i][2])+'\n')
                 f.close()
         except NameError as err:
-            print("Blad", err)
+            print("Blad: ", err)
         except:
             print("Blad przy usuwaniu ocen studenta z bazy")
 

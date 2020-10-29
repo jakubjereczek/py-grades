@@ -14,7 +14,7 @@ class Student:
             self.df = df
             self.students = df.values.tolist()
         except IOError as err:
-            print("Problem z otwarciem pliku", err)
+            print("Wystapił problem z otwarciem pliku:", err)
 
     def dodaj(self, id, name, surname, age, city, group):
         nowyStudent = [id, name, surname, age, city, group]
@@ -38,20 +38,16 @@ class Student:
             if len(self.students) == len(newStudents):
                 raise NameError("Brak studenta o podanym ID")
             # z tablicy students nadpisanie pliku (wykluczajac danego studenta) oraz aktualizacja df by miec aktualne statystyki
-            print("lecimy dalej")
             self.df = pandas.DataFrame(newStudents, columns=[
                 'id', 'name', 'surname', 'age', 'city', 'group'])
             with open(self.fileName, 'w', encoding='utf8') as f:
-                # index
-                # znaki dostepne w utf-8
                 f.write('id;name;surname;age;city;group'+'\n')
                 for i in range(len(newStudents)):
-                    print("write")
                     f.write(str(newStudents[i][0])+';'+newStudents[i][1]+';'+newStudents[i][2]+';' +
                             str(newStudents[i][3])+';'+newStudents[i][4]+';'+newStudents[i][5]+'\n')
                 f.close()
         except NameError as err:
-            print("Blad", err)
+            print("Blad: ", err)
         except:
             print("Blad przy usuwaniu studenta z bazy")
 
@@ -68,6 +64,9 @@ class Student:
                 elif parametr == "miasto":
                     if (nazwa == self.students[i][4]):
                         listaUczniow.append(self.students[i])
+                elif parametr == "id":
+                    if (nazwa == self.students[i][0]):
+                        listaUczniow.append(self.students[i])
                 else:
                     raise NameError(
                         "Taki parametr nie istnieje. Dostepne: nazwisko, grupa oraz miasto.")
@@ -76,7 +75,7 @@ class Student:
             else:
                 return None
         except NameError as err:
-            print("Bląd.", err)
+            print("Bląd: ", err)
 
     def statystykiStudentow(self):
         print("### STATYSTYKI STUDENTOW ###")
