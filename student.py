@@ -51,27 +51,27 @@ class Student:
         except:
             print("Blad przy usuwaniu studenta z bazy")
 
-    def wyszukaj(self, parametr, nazwa):
+    def wyszukaj(self, parametr, arg):
         try:
-            listaUczniow = []
+            studentsList = []
             for i in range(len(self.students)):
                 if parametr == "nazwisko":
-                    if (nazwa == self.students[i][2]):
-                        listaUczniow.append(self.students[i])
+                    if (arg == self.students[i][2]):
+                        studentsList.append(self.students[i])
                 elif parametr == "grupa":
-                    if (nazwa == self.students[i][5]):
-                        listaUczniow.append(self.students[i])
+                    if (arg == self.students[i][5]):
+                        studentsList.append(self.students[i])
                 elif parametr == "miasto":
-                    if (nazwa == self.students[i][4]):
-                        listaUczniow.append(self.students[i])
+                    if (arg == self.students[i][4]):
+                        studentsList.append(self.students[i])
                 elif parametr == "id":
-                    if (nazwa == self.students[i][0]):
-                        listaUczniow.append(self.students[i])
+                    if (arg == self.students[i][0]):
+                        studentsList.append(self.students[i])
                 else:
                     raise NameError(
                         "Taki parametr nie istnieje. Dostepne: nazwisko, grupa oraz miasto.")
-            if len(listaUczniow) > 0:
-                return listaUczniow
+            if len(studentsList) > 0:
+                return studentsList
             else:
                 return None
         except NameError as err:
@@ -81,21 +81,21 @@ class Student:
         print("### STATYSTYKI STUDENTOW ###")
         print("Ilosc studentow w bazie: " + str(len(self.students)))
         # zakladajac, ze kazde imie kobiety konczy sie na "a" liczymy liczbe kobiet i mezczyzn
-        kobiety = 0
-        mezczyzni = 0
+        woman = 0
+        men = 0
         for i in range(len(self.students)):
             if str(self.students[i][1])[-1] == 'a':
-                kobiety += 1
+                woman += 1
             else:
-                mezczyzni += 1
-        print("Ilosc kobiet: ", str(kobiety),
-              ", ilosc mezczyzn: ", str(mezczyzni))
-        idGrup = set()
+                men += 1
+        print("Ilosc kobiet: ", str(woman),
+              ", ilosc mezczyzn: ", str(men))
+        idOfGroups = set()
         for i in range(len(self.students)):
-            idGrup.add(self.students[i][5])
-        print("Ilosc grup: " + str(len(idGrup)))
-        for grupa in idGrup:
-            liczebnosc = len(list(
-                filter(lambda name: grupa in name, self.students)))
-            print("* ", grupa, "(liczaca "+str(liczebnosc)+" osob)")
+            idOfGroups.add(self.students[i][5])
+        print("Ilosc grup: " + str(len(idOfGroups)))
+        for group in idOfGroups:
+            length = len(list(
+                filter(lambda name: group in name, self.students)))
+            print("* ", group, "(liczaca "+str(length)+" osob)")
         print("###")

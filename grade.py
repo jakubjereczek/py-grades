@@ -10,7 +10,6 @@ class Grade:
         try:
             df = pandas.read_csv(self.fileName, header=0, delimiter=";", names=[
                 'id', 'subject', 'grade'])
-            print(df)
             self.df = df
             self.grades = df.values.tolist()
         except IOError as err:
@@ -18,8 +17,8 @@ class Grade:
 
     def dodaj(self, id, subject, grade):
         print(id, subject, grade)
-        nowaOcena = [id, subject, grade]
-        self.grades.append(nowaOcena)
+        newGrade = [id, subject, grade]
+        self.grades.append(newGrade)
         self.df = pandas.DataFrame(self.grades, columns=[
             'id', 'subject', 'grade'])
         try:
@@ -46,7 +45,7 @@ class Grade:
                         str(newGrades[i][0])+';'+newGrades[i][1]+';'+str(newGrades[i][2])+'\n')
                 f.close()
         except NameError as err:
-            print("Blad: ", err)
+            print("Blad:", err)
         except:
             print("Blad przy usuwaniu ocen studenta z bazy")
 
@@ -54,11 +53,11 @@ class Grade:
         # ilosc studentow ktorzy maja wystawiona przynajmniej jedna ocene
         # uzycie Set by uniknąc dupikatow
         print("### STATYSTYKI OCEN ###")
-        idStudentow = set()
+        idOfStudents = set()
         for i in range(len(self.grades)):
-            idStudentow.add(self.grades[i][0])
+            idOfStudents.add(self.grades[i][0])
         print("Ilosc studentów, którym wpisano choćby jedną ocene: " +
-              str(len(idStudentow)))
+              str(len(idOfStudents)))
         # srednia ocen
         print("Srednia ocen dla przedmiotów: ")
         print(self.df.groupby(['subject'])['grade'].mean())
